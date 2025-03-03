@@ -1,4 +1,4 @@
-# include "main.hpp"
+# include "BitcoinExchange.hpp"
 
 int main()
 {

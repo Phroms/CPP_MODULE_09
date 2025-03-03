@@ -6,7 +6,7 @@
 #    By: agrimald <agrimald@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/03 20:42:30 by agrimald          #+#    #+#              #
-#    Updated: 2025/03/03 20:51:21 by agrimald         ###   ########.fr        #
+#    Updated: 2025/03/03 20:54:52 by agrimald         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,9 @@ YELLOW = \033[93m
 RED = \033[91m
 END_COLOR = \033[0m
 
-SRC = main.cpp
+SRC = BitcoinExchange.cpp main.cpp
 
-INC =  main.hpp
+INC =  BitcoinExchange.hpp
 
 OBJECTS = $(SRC:.cpp=.o)
 
@@ -35,7 +35,7 @@ $(NAME): $(OBJECTS)
 		 @$(CPP) $(CPPFLAGS) -o $@ $^
 
 %.o: %.cpp $(INC) Makefile
-		 @printf "$(YELLOW)\nGeneratong objects .... %s $(END_COLOR)\r\n" $@
+		 @printf "$(YELLOW)Generatong objects .... %s $(END_COLOR)\r\n" $@
 		 @$(CPP) $(CPPFLAGS) -c $< -o $@
 
 fclean: clean
