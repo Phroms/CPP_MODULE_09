@@ -6,11 +6,11 @@
 #    By: agrimald <agrimald@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/03 20:42:30 by agrimald          #+#    #+#              #
-#    Updated: 2025/03/03 20:54:52 by agrimald         ###   ########.fr        #
+#    Updated: 2025/03/03 21:01:13 by agrimald         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Bitcoin
+NAME = btc
 CPP = c++
 CPPFLAGS = -Wall -Werror -Wextra -std=c++98
 RM = rm -rf
