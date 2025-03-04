@@ -1,13 +1,19 @@
 # include "BitcoinExchange.hpp"
-#include <fstream>
-#include <ostream>
+#include <string>
 
-void read_file()
+void read_file(char **argv)
 {
-	std::ifstream myFile ("input.txt");
+	std::string line;
 
-	if (!myFile.is_open())
+	std::ifstream myFile (argv[1]);
+
+	if (!myFile)
 	{
-		std::cerr << "Error: archivo no abierto" << std::endl;
+		std::cerr << "Error: al intentar abrir el archivo" << std::endl;
+		return;
 	}
+
+	while (std::getline(myFile, line))
+		std::cout << line << std::endl;
+	myFile.close();
 } 
