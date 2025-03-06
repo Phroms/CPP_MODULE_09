@@ -1,6 +1,8 @@
 # pragma once
 # include <iostream>
 # include <fstream>
+# include <map>
+# include <string>
 
 template <typename T>
 class Bitcoin

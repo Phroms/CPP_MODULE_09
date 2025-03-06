@@ -1,5 +1,4 @@
 # include "BitcoinExchange.hpp"
-#include <string>
 
 void read_file(char **argv)
 {
