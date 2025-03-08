@@ -2,6 +2,7 @@
 # include <iostream>
 # include <fstream>
 # include <stdexcept>
+# include <algorithm>
 # include <map>
 # include <string>
 
@@ -19,6 +20,7 @@ class Bitcoin
 		Bitcoin(const Bitcoin &cpy);
 		Bitcoin &operator=(const Bitcoin &rhs);
 		~Bitcoin();
+		float getRate(const std::string &date) const;
+		bool found_file(const char* file);
 		void parse(Bitcoin &data, const char* file);
-		void found_file(Bitcoin &data);
 };
