@@ -1,6 +1,4 @@
 # include "BitcoinExchange.hpp"
-#include <sstream>
-#include <string>
 
 Bitcoin::Bitcoin(){}
 
@@ -79,6 +77,63 @@ bool Bitcoin::found_file(const char* file)
 		}
 	}
 	myFile.close();
+	return true;
+}
+
+// Funcion para ver el year biciesto
+bool isleasteYear(int year)
+{
+	if (year % 400 == 0) // Si el year divisible por 400, es biciesto
+		return true;
+
+	if (year % 100 == 0) // Si el year es divisible por 100 pero no por 400, no es biciesto
+		return false;
+
+	if (year % 4 == 0) // Si el year es divisible por 4, es biciesto
+		return true;
+
+	return false;
+}
+
+// Metodo para encontrar la fecha
+bool Bitcoin::found_date(const std::string &date)
+{
+	std::stringstream ss(date);
+	std::string value;
+	int day;
+	int month;
+	int year;
+
+	// Obtener el year
+	if (!std::getline(ss, value, '-') || !isDigitStr(value) || value.length() != 4)
+		return false;
+	std::istringstream(value) >> year; // Convierte la cadena en un numero y lo guarda en year
+
+	// Obtener el month
+	if (!std::getline(ss, value) || !isDigitStr(value))
+		return false;
+	std::istringstream(value) >> month; // Convierte la cadena en un numero y lo guarda en month
+	
+	// Obtener el day
+	if (!std::getline(ss, value))
+		return false;
+	std::istringstream(value) >> day; // Convierte la cadena en un numero y lo guarda en day
+	
+	// Validar month y day
+	if (month < 1 || month > 12 || day < 1 || day > 31)
+		return false;
+
+	// Validar year
+	if ((month == 4 ||  month == 6 || month == 9 || month == 11) && day == 31)
+		return false;
+
+	// Validar February
+	if (month == 2)
+	{
+		int leasteYear = isleasteYear(year);
+		if ((leasteYear && day > 29) || (!leasteYear && day > 28))
+			return false;
+	}
 	return true;
 }
 

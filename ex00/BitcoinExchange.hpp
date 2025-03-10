@@ -1,6 +1,7 @@
 # pragma once
 # include <iostream>
 # include <fstream>
+# include <sstream>
 # include <stdexcept>
 # include <algorithm>
 # include <map>
@@ -23,4 +24,5 @@ class Bitcoin
 		float getRate(const std::string &date) const;
 		bool found_file(const char* file);
 		void parse(Bitcoin &data, const char* file);
+		bool found_date(const std::string &date);
 };
