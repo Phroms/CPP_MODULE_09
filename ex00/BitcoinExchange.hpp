@@ -8,6 +8,7 @@
 # include <string>
 
 # define CYAN "\033[96m"
+# define YELLOW "\033[93m"
 # define RED "\033[91m"
 # define END_COLOR "\033[0m"
 
@@ -23,6 +24,5 @@ class Bitcoin
 		~Bitcoin();
 		float getRate(const std::string &date) const;
 		bool found_file(const char* file);
-		void parse(Bitcoin &data, const char* file);
-		bool found_date(const std::string &date);
+		bool parse(const char* fileName) const;
 };

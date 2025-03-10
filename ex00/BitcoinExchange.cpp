@@ -55,6 +55,7 @@ float Bitcoin::getRate(const std::string &date) const
 	return it->second; // Retorna la data encontrada
 }
 
+// Cargar la data de un archivo CSV
 bool Bitcoin::found_file(const char* file)
 {
 	std::ifstream myFile (file);
@@ -95,8 +96,8 @@ bool isleasteYear(int year)
 	return false;
 }
 
-// Metodo para encontrar la fecha
-bool Bitcoin::found_date(const std::string &date)
+// Funcion para encontrar la fecha
+bool found_date(const std::string &date)
 {
 	std::stringstream ss(date);
 	std::string value;
@@ -137,22 +138,85 @@ bool Bitcoin::found_date(const std::string &date)
 	return true;
 }
 
-void Bitcoin::parse(Bitcoin &data, const char* file)
+// Metodo para hacer una conversion de string a float
+float strToFloat(const std::string &valueStr)
 {
-	(void)data;
-	std::fstream fs;
-	std::string line;
+	std::stringstream ss(valueStr); // stringstream = almacena toda una string que le envies; (en este caso se almacena valueStr en ss)
+	float value;
 
-	fs.open(file, std::fstream::in); //fstream::in es un modo que solo le indica que leera ese archivo(tambien esta out que le servira para escribir)
+	ss >> value; // Intenta extraer un numero de float de ss y almacenarlo en value
+	
+	if (ss.fail()) // Verifica si ocurrio un error en la conversion
+	{
+		throw std::invalid_argument("Invalid number format");
+	}
+	
+	return value; // Retorna el numero convertido
+}
 
-	if (!fs.is_open())
+// Procesar archivo de entrada
+bool Bitcoin::parse(const char* fileName) const
+{
+	std::ifstream file(fileName); // Esta linea crea un objeto ifstream llamado file, que se usa para leer archivos
+
+	if (!file.is_open()) // Si no se pudo abrir el archivo, damos el throw que indicara el error
 	{
 		throw std::logic_error("Failed to open input text");
 	}
-	while (std::getline(fs, line))
-		std::cout << line << std::endl;
-	fs.close();
 	
+	std::string line; // Creamos una string llamada line para almacenar cada linea leida del archivo
+	bool firstLine = true; // Un booleano que se usa para saltarse la primera linea leida del archivo
+	
+	while (std::getline(file, line)) // lee una linea del archivo y la almacena en line hasta llegar al final del archivo
+	{
+		if (firstLine) // Si es la primera linea del archivo, se marca con false y se usa continue para saltarse esa linea
+		{
+			firstLine = false;
+			continue; // Saltarse la primera linea
+		}
+		std::istringstream inputLine(line); // Crea un objeto istringstream llamado inputLine que permite leer desde la cadena line
+		std::string date; // Una variable de tipo string para almacenar la fecha (date)
+		std::string valueStr; // Una variable de tipo string para almacenar el valor (variable)
+		
+		// (!str::getline(inputLine, date, '|'))
+		// esta Funcion lee desde la entrada de inputLine(que es la linea que hemos leido del archivo)
+		// hasta encontrar '|' y la almacenara en date 
+		// ejemplo: "2020-12-10|500.0" -> date = "2020-03-10"
+		if (!std::getline(inputLine, date, '|') || !std::getline(inputLine, valueStr))
+		{
+			// Despues de haber leido la fecha getline Intenta leer el resto de la linea(despues de '|')
+			// y lo coloca en la variable "valueStr"
+			// ejemplo: "2020-12-10|500.0" -> valueStr = "500.0"
+			std::cerr << RED << "ERROR: " << END_COLOR << "Entrada invalida => " << line << std::endl;
+			continue;
+		}
+
+		date = trimString(date); // Con la Funcion trimString eliminamos los espacios en blanco al princio de la string
+		valueStr = trimString(valueStr); // Con la Funcion trimString eliminamos los espcaions en blanco al final de la string	
+		
+		try
+		{
+			if (!found_date(date)) // Si la fecha no es valida, lanzamos la excepcion
+			{
+				throw std::invalid_argument("Invalid date => " + date);
+			}
+			float value = strToFloat(valueStr); // Se convierte la string valueStr a un numero de punto flotante (float)
+			if (value < 0 || value > 1000)
+			{
+				throw std::invalid_argument("Number out of range => " + valueStr);
+			}
+
+			float rate = getRate(date); // Se obtiene la tasa de cambio correspondiente a la fecha mediante la funcion getRate y getRate devuelve el valor para esa fecha
+			std::cout << date << " => " << value << " = " << value * rate << std::endl;
+			// Si todo fue correcto, se imprime la fecha, el valor original y el resultado de la multiplicacion de ese valor por la tasa de cambio obtenida
+		}
+		catch (const std::exception &e) // Se lanza una exception cuando ocurre un fallo
+		{
+			std::cerr << e.what() << std::endl;
+		}
+	}
+	file.close();
+	return true;
 }
 
  
