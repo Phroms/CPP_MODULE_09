@@ -45,13 +45,10 @@ float Bitcoin::getRate(const std::string &date) const
 {
 	std::map<std::string, float>::const_iterator it;
 
-	it = data.lower_bound(date); // lower_bound te encuentra la fecha igual o mayor
-	if (it == data.end() || it ->first != date) // Si leyo toda la data hasta el final o si es distinto la data enviada, entrara en el segundo if
-	{
-		if (it == data.begin()) // Si dentro de la data esta la fecha solicitada retornara el valor, pero si no esta hara un -- y se ira a la mas cercana o mejor dicho mayor
-			return 0; // No hay fechas previas
-		it--; // Retrocede a la fecha mas cercana anterior
-	}
+	it = data.upper_bound(date); // lower_bound te encuentra la fecha igual o mayor
+	if (it == data.begin()) // Si dentro de la data esta la fecha solicitada retornara el valor, pero si no esta hara un -- y se ira a la mas cercana o mejor dicho mayor
+		throw std::invalid_argument("Date not found");
+	it--; // Retrocede a la fecha mas cercana anterior
 	return it->second; // Retorna la data encontrada
 }
 
@@ -238,6 +235,4 @@ bool Bitcoin::parse(const char* fileName) const
 	}
 	file.close();
 	return true;
-}
-
- 
+} 
