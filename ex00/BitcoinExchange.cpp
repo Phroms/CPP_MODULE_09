@@ -106,19 +106,40 @@ bool found_date(const std::string &date)
 	int year;
 
 	// Obtener el year
-	if (!std::getline(ss, value, '-') || !isDigitStr(value) || value.length() != 4)
+	if (std::getline(ss, value, '-'))
+	{
+		if (!isDigitStr(value) || value.length() != 4)
+			return false;
+		std::istringstream key(value);
+		if (!(key >> year)) // Se intenta convertir la string a un numero entero
+			return false;
+	}
+	else
 		return false;
-	std::istringstream(value) >> year; // Convierte la cadena en un numero y lo guarda en year
 
 	// Obtener el month
-	if (!std::getline(ss, value) || !isDigitStr(value))
+	if (std::getline(ss, value, '-'))
+	{
+		if (!isDigitStr(value) || value.length() != 2)
+			return false;
+		std::istringstream key(value);
+		if (!(key >> month))
+			return false;
+	}
+	else
 		return false;
-	std::istringstream(value) >> month; // Convierte la cadena en un numero y lo guarda en month
 	
 	// Obtener el day
-	if (!std::getline(ss, value))
+	if (std::getline(ss, value))
+	{
+		if (!isDigitStr(value) || value.length() != 2)
+			return false;
+		std::istringstream key(value);
+		if (!(key >> day))
+			return false;
+	}
+	else
 		return false;
-	std::istringstream(value) >> day; // Convierte la cadena en un numero y lo guarda en day
 	
 	// Validar month y day
 	if (month < 1 || month > 12 || day < 1 || day > 31)
