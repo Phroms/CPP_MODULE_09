@@ -6,7 +6,7 @@
 #    By: agrimald <agrimald@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/11 20:03:55 by agrimald          #+#    #+#              #
-#    Updated: 2025/03/11 20:11:29 by agrimald         ###   ########.fr        #
+#    Updated: 2025/03/12 16:25:04 by agrimald         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,9 @@ YELLOW = \033[93m
 RED = \033[91m
 END_COLOR = \033[0m
 
-SRC = main.cpp
+SRC = main.cpp RPN.cpp
 
-INC = main.hpp
+INC = RPN.hpp
 
 OBJECTS = $(SRC:.cpp=.o)
 
