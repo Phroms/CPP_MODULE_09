@@ -1,10 +1,12 @@
 # include "PmergeMe.hpp"
+#include <algorithm>
+#include <cstddef>
 
 PmergeMe::PmergeMe() {}
 
 PmergeMe::~PmergeMe() {}
 
-void PmergeMe::sortVector(const std::vector<int> &vec)
+void PmergeMe::sortVector(std::vector<int> &vec)
 {
 	if (vec.size() <= 1)
 		return ;
@@ -37,6 +39,40 @@ void PmergeMe::sortVector(const std::vector<int> &vec)
 			std::cout << GREEN << "\nElemento solo: " << vec[i] << END_COLOR << std::endl;
 		}
 	}
+
+	// Creamos dos grupos, 'pend' para los numeros bajos y 'main' para los altos
+	std::vector<int> pend, main;
+
+	for (size_t i = 0; i < pares.size(); i += 2) // Recorremos de dos en dos
+	{
+		pend.push_back(pares[i]); // anadimos el primer elemento del par a 'pend'
+		
+		if (i + 1 < pares.size()) // verificamos que haya un segundo elemento para evitar el desbordamiento
+		{
+			main.push_back(pares[i + 1]); // anadimos el segundo elemento del par a 'main'
+		}
+	}
+
+	// Aplicamos Merge-Insertion
+	// Ordena con sort(algoritmo de ordenacion rapida de STL)
+	std::sort(main.begin(), main.end()); // Ordena los elementos en 'main'
+	
+	// Copia los elementos ordenados de 'main' al vector original 'vec' 
+	vec = main;
+
+	// Insertar los elementos de 'pend' en 'vec' en la posición correcta
+	for (size_t i = 0; i < pend.size(); i++)
+	{
+		std::vector<int>::iterator it = std::lower_bound(vec.begin(), vec.end(), pend[i]);
+		vec.insert(it, pend[i]); // Insertar cada elemento en orden correcto
+	}
+
+	std::cout << CYAN << "\nVector Ordenado: " << END_COLOR;
+	for (size_t i = 0; i < vec.size(); i++)
+	{
+		std::cout << vec[i] << " ";
+	}
+	std::cout << std::endl;
 }
 
 void PmergeMe::sortDeque(const std::deque<int> &deq)

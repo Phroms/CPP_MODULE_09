@@ -18,7 +18,7 @@ class PmergeMe
 	public:
 		PmergeMe();
 		~PmergeMe();
-		void sortVector(const std::vector<int> &vec);
+		void sortVector(std::vector<int> &vec);
 		void sortDeque(const std::deque<int> &deq);
 		void printVect(const std::vector<int> &vec);
 		void printDeqe(const std::deque<int> &deq);
