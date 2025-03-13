@@ -22,8 +22,6 @@ int main(int argc, char **argv)
 			return 1;
 		}
 
-		std::cout << "Aqui: " <<num << std::endl;
-
 		vector.push_back(num);
 		deque.push_back(num);
 	}
@@ -32,6 +30,8 @@ int main(int argc, char **argv)
 
 	pmerge.printVect(vector);
 	pmerge.printDeqe(deque);
+
+	pmerge.sortVector(vector);
 
 	return 0;
 }
