@@ -32,6 +32,7 @@ int main(int argc, char **argv)
 	pmerge.printDeqe(deque);
 
 	pmerge.sortVector(vector);
+	pmerge.sortDeque(deque);
 
 	return 0;
 }

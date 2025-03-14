@@ -19,7 +19,7 @@ class PmergeMe
 		PmergeMe();
 		~PmergeMe();
 		void sortVector(std::vector<int> &vec);
-		void sortDeque(const std::deque<int> &deq);
+		void sortDeque(std::deque<int> &deq);
 		void printVect(const std::vector<int> &vec);
 		void printDeqe(const std::deque<int> &deq);
 };

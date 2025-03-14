@@ -1,6 +1,4 @@
 # include "PmergeMe.hpp"
-#include <algorithm>
-#include <cstddef>
 
 PmergeMe::PmergeMe() {}
 
@@ -75,11 +73,82 @@ void PmergeMe::sortVector(std::vector<int> &vec)
 	std::cout << std::endl;
 }
 
-void PmergeMe::sortDeque(const std::deque<int> &deq)
+void PmergeMe::sortDeque(std::deque<int> &deq)
 {
 	if (deq.size() <= 1)
 		return ;
 
+	std::deque<int> pares; // Creamos un deque llamado pares, para almacenar los pares ordenados
+	
+	std::deque<int>::const_iterator it = deq.begin(); // Un iterator para recorrer el deque
+
+	while (it != deq.end()) // Bucle para ordenar los pares y ordenarlos
+	{
+		int first = *it; // Tomamos el primer numero del par
+		it++; // Avanzamos con el iterator
+		if (it == deq.end()) // Si llegamos al final significa que encontramos un numero solo
+		{
+			pares.push_back(first); // Guardamos el numero solo
+			break; // Salimos del Bucle
+		}
+
+		int second = *it; // Tomamos el segundo numero del par
+		it++; // Avanzamos el iterator al siguiente par
+		
+		// Ordenamos el par antes de almacenarlo en 'pares'
+		if (first < second)
+		{
+			pares.push_back(first); // numero bajo primero
+			pares.push_back(second); // numero alto despues
+		}
+		else
+		{
+			pares.push_back(second); // numero alto primero
+			pares.push_back(first); // numero bajo despues
+		}
+	}
+
+	// Creamos dos grupos: 'pend' para los numeros bajos y 'main' para los mayores
+	std::deque<int> pend, main;
+
+	// Variable para alternar entre los dos grupos
+	bool addToLeft = true;
+
+	// Recorremos los elementos de 'pares' usando un iterator normal
+	for (std::deque<int>::iterator it = pares.begin(); it != pares.end(); it++)
+	{
+		if (addToLeft)
+		{
+			pend.push_back(*it); // Agregamos a 'pend'
+		}
+		else
+		{
+			main.push_back(*it); // Agregamos a 'main'
+		}
+		addToLeft = !addToLeft; // Es una alteracion que al principio addToLeft es true
+		// y con esta linea va cambiando su valor si es true, cambia a false, si es false cambia a true
+		// y eso lo hace para indicar a los elementos a que bloque ir, si es true va a pend(numeros bajos)
+		// si es false va main(numeros altos)
+	}
+	// Ordenamos los elementos en 'main' usando std::sort
+	std::sort(main.begin(), main.end());
+
+	// Pasamos el contenido de 'main' a 'deq'
+	deq = main;
+
+	// Insertamos los elementos de 'pend' end 'deq' en la posición correcta
+	for (std::deque<int>::iterator it = pend.begin(); it != pend.end(); it++)
+	{
+		// Buscamos la posición correcta usando busqueda binaria
+		std::deque<int>::iterator insertPost = std::lower_bound(deq.begin(), deq.end(), *it);
+		deq.insert(insertPost, *it); // Insertamos el numero en el lugar correcto
+	}
+	std::cout << CYAN << "\nDeque Ordenado: " << END_COLOR;
+	for (size_t i = 0; i < deq.size(); i++)
+	{
+		std::cout << deq[i] << " ";
+	}
+	std::cout << std::endl;
 }
 
 void PmergeMe::printVect(const std::vector<int> &vec)
