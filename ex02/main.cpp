@@ -31,8 +31,10 @@ int main(int argc, char **argv)
 	pmerge.printVect(vector);
 	pmerge.printDeqe(deque);
 
-	pmerge.sortVector(vector);
-	pmerge.sortDeque(deque);
+	//pmerge.sortVector(vector);
+	//pmerge.sortDeque(deque);
+
+	pmerge.calculateTime(vector, deque);
 
 	return 0;
 }

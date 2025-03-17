@@ -1,4 +1,5 @@
 # include "PmergeMe.hpp"
+#include <ctime>
 
 PmergeMe::PmergeMe() {}
 
@@ -20,7 +21,7 @@ void PmergeMe::sortVector(std::vector<int> &vec)
 				pares.push_back(vec[i]); // anadimos el primer elemento(menor => 40) (menor => 10)
 				pares.push_back(vec[i + 1]); // anadimos el segundo elemento(mayor => 60) (mayor => 20)
 				// lo que deberia quedar es (40, 60) ; (10, 20)
-				std::cout << GREEN << "\nGrupo formado: " << vec[i] << " " << vec[i + 1] << END_COLOR << std::endl;
+				std::cout << BLUE << "\nGrupo formado: " << END_COLOR << vec[i] << " " << vec[i + 1] << std::endl;
 			}
 			else // Si el primer elemento es mayor o igual al segundo, lo anadimos en orden descendete
 			{
@@ -28,13 +29,13 @@ void PmergeMe::sortVector(std::vector<int> &vec)
 				pares.push_back(vec[i + 1]); // anadimos el segundo elemento(menor => 30)
 				pares.push_back(vec[i]); // anadimos el primer elemento(mayor => 50)
 				// lo que deberia quedar es (30, 50)
-				std::cout << GREEN << "\nGrupo formado 2: " << vec[i + 1] << " " << vec[i] << END_COLOR << std::endl;
+				std::cout << BLUE << "\nGrupo formado 2: " << END_COLOR << vec[i + 1] << " " << vec[i] << std::endl;
 			}
 		}
 		else // Si no hay par (es decir, estamos en el ultimo elemento sin pareja(osea un numero solo))
 		{
 			pares.push_back(vec[i]); // anadimos el ultimo elemento solo, ya que no tiene par
-			std::cout << GREEN << "\nElemento solo: " << vec[i] << END_COLOR << std::endl;
+			std::cout << BLUE << "\nElemento solo: " << END_COLOR << vec[i] << std::endl;
 		}
 	}
 
@@ -149,6 +150,30 @@ void PmergeMe::sortDeque(std::deque<int> &deq)
 		std::cout << deq[i] << " ";
 	}
 	std::cout << std::endl;
+}
+
+void PmergeMe::calculateTime(std::vector<int> &vec, std::deque<int> &deq)
+{
+	// Time vec
+	clock_t start_vec = clock();
+
+	sortVector(vec);
+
+	clock_t final_vec = clock();
+
+	double resultVec = ((double) (final_vec - start_vec)) / CLOCKS_PER_SEC * 10;
+
+	// Time deque
+	clock_t start_deq = clock();
+
+	sortDeque(deq);
+
+	clock_t final_deq = clock();
+
+	double resultDeq = ((double) (final_deq - start_deq)) / CLOCKS_PER_SEC * 10;
+
+	std::cout << GREEN << "\nTime vec: " << END_COLOR << resultVec << std::endl;
+	std::cout << GREEN << "\nTime deq: " << END_COLOR << resultDeq << std::endl;
 }
 
 void PmergeMe::printVect(const std::vector<int> &vec)

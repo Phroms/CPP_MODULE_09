@@ -3,12 +3,16 @@
 # include <vector>
 # include <deque>
 # include <algorithm>
+# include <ctime>
 
 # define CYAN "\033[96m"
-# define GREEN "\033[94m"
+# define GREEN "\033[92m"
+# define BLUE "\033[94m"
 # define YELLOW "\033[93m"
 # define RED "\033[91m"
 # define END_COLOR "\033[0m"
+
+typedef clock_t aaaa;
 
 class PmergeMe
 {
@@ -22,4 +26,6 @@ class PmergeMe
 		void sortDeque(std::deque<int> &deq);
 		void printVect(const std::vector<int> &vec);
 		void printDeqe(const std::deque<int> &deq);
+
+		void calculateTime(std::vector<int> &vec, std::deque<int> &deq);
 };
