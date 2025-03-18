@@ -25,7 +25,7 @@ std::string trimString(const std::string &str)
 	size_t first = str.find_first_not_of(" "); // metodo que encuentra los espacios al principio de la string
 	size_t last = str.find_last_not_of(" "); // metodo que encuentra los espacios al final de la string
 
-	return str.substr(first, last - first + 1); // hacemos una substring con los espacios eliminados + 1, para el ultimo caracter
+	return str.substr(first, last - first + 1); // hacemos una substring con los espacios eliminados + 1 para el ultimo caracter
 }
 
 // Funcion para verificar que la cadena solo tiene numeros
