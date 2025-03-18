@@ -4,6 +4,7 @@
 # include <deque>
 # include <algorithm>
 # include <ctime>
+# include <sstream>
 
 # define CYAN "\033[96m"
 # define GREEN "\033[92m"
@@ -24,8 +25,8 @@ class PmergeMe
 		~PmergeMe();
 		void sortVector(std::vector<int> &vec);
 		void sortDeque(std::deque<int> &deq);
-		void printVect(const std::vector<int> &vec);
-		void printDeqe(const std::deque<int> &deq);
+		void printAfter(const std::vector<int> &vec);
+		void printBefore(const std::vector<int> &vec);
 
 		void calculateTime(std::vector<int> &vec, std::deque<int> &deq);
 };

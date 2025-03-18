@@ -1,4 +1,5 @@
 # include "PmergeMe.hpp"
+#include <cstddef>
 #include <ctime>
 
 PmergeMe::PmergeMe() {}
@@ -21,7 +22,7 @@ void PmergeMe::sortVector(std::vector<int> &vec)
 				pares.push_back(vec[i]); // anadimos el primer elemento(menor => 40) (menor => 10)
 				pares.push_back(vec[i + 1]); // anadimos el segundo elemento(mayor => 60) (mayor => 20)
 				// lo que deberia quedar es (40, 60) ; (10, 20)
-				std::cout << BLUE << "\nGrupo formado: " << END_COLOR << vec[i] << " " << vec[i + 1] << std::endl;
+				//std::cout << BLUE << "\nGrupo formado: " << END_COLOR << vec[i] << " " << vec[i + 1] << std::endl;
 			}
 			else // Si el primer elemento es mayor o igual al segundo, lo anadimos en orden descendete
 			{
@@ -29,13 +30,13 @@ void PmergeMe::sortVector(std::vector<int> &vec)
 				pares.push_back(vec[i + 1]); // anadimos el segundo elemento(menor => 30)
 				pares.push_back(vec[i]); // anadimos el primer elemento(mayor => 50)
 				// lo que deberia quedar es (30, 50)
-				std::cout << BLUE << "\nGrupo formado 2: " << END_COLOR << vec[i + 1] << " " << vec[i] << std::endl;
+				//std::cout << BLUE << "\nGrupo formado 2: " << END_COLOR << vec[i + 1] << " " << vec[i] << std::endl;
 			}
 		}
 		else // Si no hay par (es decir, estamos en el ultimo elemento sin pareja(osea un numero solo))
 		{
 			pares.push_back(vec[i]); // anadimos el ultimo elemento solo, ya que no tiene par
-			std::cout << BLUE << "\nElemento solo: " << END_COLOR << vec[i] << std::endl;
+			//std::cout << BLUE << "\nElemento solo: " << END_COLOR << vec[i] << std::endl;
 		}
 	}
 
@@ -66,12 +67,13 @@ void PmergeMe::sortVector(std::vector<int> &vec)
 		vec.insert(it, pend[i]); // Insertar cada elemento en orden correcto
 	}
 
-	std::cout << CYAN << "\nVector Ordenado: " << END_COLOR;
+	printBefore(vec);
+	/*std::cout << CYAN << "\nVector Ordenado: " << END_COLOR;
 	for (size_t i = 0; i < vec.size(); i++)
 	{
 		std::cout << vec[i] << " ";
 	}
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 }
 
 void PmergeMe::sortDeque(std::deque<int> &deq)
@@ -144,12 +146,12 @@ void PmergeMe::sortDeque(std::deque<int> &deq)
 		std::deque<int>::iterator insertPost = std::lower_bound(deq.begin(), deq.end(), *it);
 		deq.insert(insertPost, *it); // Insertamos el numero en el lugar correcto
 	}
-	std::cout << CYAN << "\nDeque Ordenado: " << END_COLOR;
+	/*std::cout << CYAN << "\nDeque Ordenado: " << END_COLOR;
 	for (size_t i = 0; i < deq.size(); i++)
 	{
 		std::cout << deq[i] << " ";
 	}
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 }
 
 void PmergeMe::calculateTime(std::vector<int> &vec, std::deque<int> &deq)
@@ -172,27 +174,50 @@ void PmergeMe::calculateTime(std::vector<int> &vec, std::deque<int> &deq)
 
 	double resultDeq = ((double) (final_deq - start_deq)) / CLOCKS_PER_SEC * 10;
 
-	std::cout << GREEN << "\nTime vec: " << END_COLOR << resultVec << std::endl;
-	std::cout << GREEN << "\nTime deq: " << END_COLOR << resultDeq << std::endl;
+	std::cout << BLUE << "\nVECTOR: " << END_COLOR << "Time to process a range of " << END_COLOR << GREEN << vec.size() << END_COLOR << " elements with std::[..] : " << GREEN << resultVec << END_COLOR << std::endl;
+	std::cout << BLUE << "\nDEQUE: " << END_COLOR << "Time to process a range of " << END_COLOR << GREEN << deq.size() << END_COLOR << " elements with std::[..] : " << GREEN << resultDeq << END_COLOR << std::endl;
 }
 
-void PmergeMe::printVect(const std::vector<int> &vec)
+void PmergeMe::printAfter(const std::vector<int> &vec)
 {
-	std::cout << YELLOW << "\nPrint Vector: " << END_COLOR;
+	std::cout << YELLOW << "\nAfter: " << END_COLOR;
 
-	for (size_t i = 0; i < vec.size(); i++)
+	if (vec.size() > 5)
 	{
-		std::cout << vec[i] << " ";
+		for (size_t i = 0; i < 4; i++)
+		{
+			std::cout << vec[i] << " ";
+		}
+		std::cout << "[...]";
+	}
+	else
+	{
+		for (size_t i = 0; i < vec.size(); i++)
+		{
+			std::cout << vec[i] << " ";
+		}
 	}
 	std::cout << std::endl;
 }
 
-void PmergeMe::printDeqe(const std::deque<int> &deq)
+void PmergeMe::printBefore(const std::vector<int> &vec)
 {
-	std::cout << YELLOW << "\nPrint Deque: " << END_COLOR;
-	for (size_t i = 0; i < deq.size(); i++)
+	std::cout << CYAN << "\nBefore: " << END_COLOR;
+	
+	if (vec.size() > 5)
 	{
-		std::cout << deq[i] << " ";
+		for (size_t i = 0; i < 4; i++)
+		{
+			std::cout << vec[i] << " ";
+		}
+		std::cout << "[...]";
+	}
+	else
+	{
+		for (size_t i = 0; i < vec.size(); i++)
+		{
+			std::cout << vec[i] << " ";
+		}
 	}
 	std::cout << std::endl;
 }

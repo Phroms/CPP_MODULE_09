@@ -1,5 +1,4 @@
 # include "PmergeMe.hpp"
-#include <sstream>
 
 int main(int argc, char **argv)
 {
@@ -28,13 +27,13 @@ int main(int argc, char **argv)
 
 	PmergeMe pmerge;
 
-	pmerge.printVect(vector);
-	pmerge.printDeqe(deque);
+	pmerge.printAfter(vector);
+	pmerge.calculateTime(vector, deque);
+	//pmerge.printBefore(vector);
 
 	//pmerge.sortVector(vector);
 	//pmerge.sortDeque(deque);
 
-	pmerge.calculateTime(vector, deque);
 
 	return 0;
 }
