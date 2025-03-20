@@ -6,7 +6,7 @@
 #    By: agrimald <agrimald@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/11 20:03:55 by agrimald          #+#    #+#              #
-#    Updated: 2025/03/12 16:25:04 by agrimald         ###   ########.fr        #
+#    Updated: 2025/03/20 20:49:14 by agrimald         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,23 +28,25 @@ OBJECTS = $(SRC:.cpp=.o)
 all: banner $(NAME)
 
 banner:
-		 @printf "\n"
+		 printf "\n"
 
 $(NAME): $(OBJECTS)
-		 @printf "$(CYAN)\nCompiling!!\n$(END_COLOR)\n"
-		 @$(CPP) $(CPPFLAGS) -o $@ $^
+		 printf "$(CYAN)\nCompiling!!\n$(END_COLOR)\n"
+		 $(CPP) $(CPPFLAGS) -o $@ $^
 
 %.o: %.cpp $(INC) Makefile
-		 @printf "$(YELLOW)Generating objects .... %s $(END_COLOR)\r\n" $@
-		 @$(CPP) $(CPPFLAGS) -c $< -o $@
+		 printf "$(YELLOW)Generating objects .... %s $(END_COLOR)\r\n" $@
+		 $(CPP) $(CPPFLAGS) -c $< -o $@
 
 fclean: clean
-		 @$(RM) $(NAME) $(OBJECTS)
+		 $(RM) $(NAME) $(OBJECTS)
 
 clean:
-		@printf "$(RED)\nRemoving!!\n$(END_COLOR)\n"
-		@$(RM) $(OBJECTS)
+		printf "$(RED)\nRemoving!!\n$(END_COLOR)\n"
+		$(RM) $(OBJECTS)
 
 re: fclean all
 
 .PHONY: re clean fclean all
+
+.SILENT:
